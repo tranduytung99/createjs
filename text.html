@@ -1,0 +1,107 @@
+<!-- <script>
+var stage;
+var queue;
+function init() {
+    queue = new createjs.LoadQueue();
+    queue.installPlugin(createjs.Sound);
+
+    queue.addEventListener("complete", loadComplete);
+
+    queue.loadManifest([
+    {id:"butterfly", src:"image/mouse.png"},
+    {id:"woosh", src:"sounds/woosh.mp3"},
+    {id:"chime", src:"sounds/chime.mp3"}
+    ]);
+}
+  function loadComplete() {
+    setupStage();
+    buildButterflies();
+  }
+function setupStage() {
+  stage = new createjs.Stage('canvas');
+
+  createjs.Ticker.setFPS(60);
+
+  createjs.Ticker.addEventListener("tick", function(){
+
+  stage.update();
+
+  });
+}
+function buildButterflies() {
+
+    var img = queue.getResult("butterfly");
+
+    var i, sound, butterfly;
+
+    for (i = 0; i < 3; i++) {
+
+    butterfly = new createjs.Bitmap(img);
+    butterfly.x = i * 200;
+
+    stage.addChild(butterfly);
+
+    createjs.Tween.get(butterfly).wait(i * 1000).to({rotation:360}, 1000,
+
+    createjs.Ease.quadOut).call(butterflyComplete);
+
+    sound = createjs.Sound.play('woosh',createjs.Sound.INTERRUPT_NONE,i * 1000);
+    }
+}
+function butterflyComplete(){
+
+    stage.removeChild(this);
+    if(!stage.getNumChildren()){
+      createjs.Sound.play('chime');
+    }
+}
+
+</script> -->
+
+<!-- <script type="text/javascript">
+var stage;
+var direction;
+var speed ;
+var circle ;
+function init(){
+   stage = new createjs.Stage('canvas');
+   direction = 1;
+   speed = 10;
+
+  circle = new createjs.Shape() ;
+circle.graphics.beginStroke('#000');
+circle.graphics.beginFill('#FFF000');
+circle.graphics.drawCircle(0, 0, 50);
+circle.radius = 50;
+circle.x = 100;
+circle.y = 300;
+
+stage.addChild(circle);
+
+createjs.Ticker.addEventListener("tick", tick);
+createjs.Ticker.setFPS(60);
+}
+function updateCircle(){
+  var nextX = circle.x + (speed * direction);
+if (nextX > stage.canvas.width - circle.radius) {
+nextX = stage.canvas.width - circle.radius;
+direction *= -1;
+}
+else if (nextX < circle.radius) {
+  nextX = circle.radius;
+direction *= -1;
+}
+circle.nextX = nextX;
+}
+function renderCircle() {
+circle.x = circle.nextX;
+}
+
+
+
+ function tick(e){
+  updateCircle();
+  renderCircle();
+  stage.update();
+ }
+</script> -->

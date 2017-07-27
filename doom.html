@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+      <script type="text/javascript" src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
+    <script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
+</head>
+<body onload="init()">
+<div id="gameHolder">
+
+<div id="instructions" style="width: 400px;height: 300px;border: dashed 2
+#008b8b;text-align: center;">
+<h3 style="font-family:arial;">Game Instructions</h3>
+<p><strong>Click</strong> on the <span style="color:red">RED</span>
+balloons as they fall from the sky.</p>
+<p>Make sure you click them <span style="text-decoration:
+underline">all</span> before time runs out!</p>
+<p>Rack up <i>as many points</i> as you can to reach the <span
+style="color:blue">BLUE</span> level.</p>
+<h2 style="font-weight: bold;margin-top:30px">GOOD LUCK!</h2>
+</div>
+
+<canvas id="canvas" width="500" height="400" style="border: black solid
+1px"></canvas>
+
+</div>
+</body>
+
+<script type="text/javascript">
+var el = new createjs.DOMElement(instructions);
+el.alpha = 0;
+el.regX = 200;
+el.x = stage.canvas.width / 2;
+stage.addChild(el);
+createjs.Tween.get(el).wait(1000).to({y:40, alpha:1},2000,
+createjs.Ease.quadOut);
+</script>
+</html>

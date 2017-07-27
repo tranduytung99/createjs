@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <script type="text/javascript" src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
+    <script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
+</head>
+<body>
+<canvas id="canvas" width="1000" height="800" style="border: black solid 1px"></canvas>
+</body>
+
+<script type="text/javascript">
+
+  var stage = new createjs.Stage('canvas');
+  var circle = new createjs.Shape();
+  circle.graphics.beginFill('#0000FF').drawCircle(0,0,50);
+  circle.x= 100;
+  circle.y = 300;
+  circle.name = "Circle";
+  stage.addChild(circle);
+  stage.enableMouseOver();
+  stage.update();
+
+  circle.addEventListener('dblclick',function(e){
+    alert(e.target);
+  });
+
+circle.cursor = 'pointer';
+
+circle.addEventListener("mouseover", function (e) {
+  circle.alpha = 1;
+  //console.log(1);
+});
+
+circle.addEventListener("mouseout", function (e) {
+  circle.alpha = .5;
+  //console.log(2);
+});
+
+circle.addEventListener('mousedown',function(e){
+stage.addEventListener('stagemousemove',function(e){
+circle.x = stage.mouseX;
+circle.y = stage.mouseY;
+console.log(circle.x);
+stage.update();
+});
+
+stage.addEventListener('stagemouseup',function(e){
+e.target.removeAllEventListeners();
+});
+});
+
+</script>
+</html>

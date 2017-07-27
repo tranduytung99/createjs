@@ -1,0 +1,38 @@
+<html>
+  <head>
+    <script type="text/javascript" src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
+    <script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
+    <script>
+    var stage , sunShape;
+      function init() {
+        stage = new createjs.Stage("demoCanvas");
+        sunShape = new createjs.Shape();
+
+        sunShape.graphics.beginFill("#F00");
+        sunShape.graphics.drawCircle(0,0,25);
+        sunShape.graphics.endFill();
+
+        sunShape.x = 25;
+        sunShape.y = 25;
+
+        stage.addChild(sunShape);
+
+        createjs.Tween.get(sunShape, {loop:true})
+          .to({x:525,y:375}, 3000, createjs.Ease.bounceOut ).wait(2000).to({x:25,y:25},3000,createjs.Ease.elasticIn);
+
+        createjs.Ticker.setFPS(60);
+        createjs.Ticker.addEventListener("tick", tickHandler);
+
+        stage.update();
+      }
+
+      function tickHandler(e){
+        stage.update();
+      }
+
+    </script>
+  </head>
+  <body onload="init();">
+    <canvas id="demoCanvas" width="550" height="400" style="border: 1px solid black"></canvas>
+  </body>
+</html>

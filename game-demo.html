@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+      <script type="text/javascript" src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
+    <script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
+</head>
+<body onload="init()">
+<canvas id="canvas" width="1000" height="800" style="border: black solid 1px"></canvas>
+</body>
+
+<script type="text/javascript">
+  var stage;
+  var shapes = [];
+  var slots = [];
+  var score = 0
+
+  function init(){
+
+   stage = new createjs.Stage('canvas');
+   var colors = ['red','green','gray','black'];
+   var i ;
+
+   for(i = 0; i< colors.length; i++){
+     slot = new createjs.Shape();
+     slot.graphics.beginStroke(colors[i]).beginFill('#FFF').drawRect(0,0,100,100);
+     slot.x = i*130+100;
+     slot.y = 80;
+     slot.regX = slot.regY = 50;
+     slot.key = i;
+     stage.addChild(slot);
+     slots.push(slot);
+     //shape
+     shape = new createjs.Shape();
+     shape.graphics.beginFill(colors[i]).drawRect(0,0,100,100);
+     shape.regX = shape.regY = 50;
+     shape.key = i;
+     shapes.push(shape);
+
+   }
+
+  buildShapes();
+  startGame();
+
+  }
+
+  function buildShapes(){
+
+   var l = shapes.length;
+   var i,shape;
+   for(i=0;i<l;i++){
+     var r = Math.floor(Math.random() * shapes.length );
+     shape = shapes[r] ;
+     shape.homeX = i*130 + 100;
+     shape.homeY = 300;
+     shape.x = shape.homeX;
+     shape.y = shape.homeY;
+     stage.addChild(shape);
+     shape.addEventListener("mousedown",start_move);
+     shapes.splice(r,1);
+
+   }
+
+  }
+
+  function start_move(e){
+
+   var shape  = e.target;
+   var slot = slots[shape.key] ;
+
+   stage.addEventListener('stagemousemove',function(e){
+     shape.x = e.stageX;
+     shape.y = e.stageY;
+
+  });
+
+   stage.addEventListener('stagemouseup',function(e){
+    stage.removeAllEventListeners();
+
+    var pt  = slot.globalToLocal(stage.mouseX,stage.mouseY);
+
+    if(shape.hitTest(pt.x,pt.y)){
+     shape.removeEventListener("mousedown",start_move);
+     createjs.Tween.get(shape).to({x:slot.x,y:slot.y},200,createjs.Ease.quadOut).call(end);
+     score++;
+
+    }else{
+      createjs.Tween.get(shape).to({x:shape.homeX,y:shape.homeY},200,createjs.Ease.quadOut).call(end);
+    }
+
+
+   });
+
+  }
+  function end(){
+    if(score == 4){
+      alert("you win");
+    }
+  }
+
+  function startGame(){
+   createjs.Ticker.setFPS(60);
+   createjs.Ticker.addEventListener('tick',function(e){
+     stage.update();
+   })
+
+  }
+
+</script>
+
+</html>

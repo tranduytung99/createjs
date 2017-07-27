@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+        <script type="text/javascript" src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
+    <script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
+</head>
+<body>
+ <canvas id="canvas" width="800" height="700"></canvas>
+</body>
+<script type="text/javascript">
+
+var stage  = new createjs.Stage('canvas');
+
+var pokers = [
+{before:"red", after:"black"},
+{before:"red", after:"green"}
+];
+var i ;
+
+for(i=0; i < pokers.length;i++){
+  var poker = new createjs.Shape();
+  poker.graphics.beginFill(pokers[i].before).command;
+  poker.graphics.drawRect(0,0,100,100);
+  poker.before = pokers[i].before;
+  poker.after = pokers[i].after;
+  poker.key = i;
+  poker.addEventListener('click',click);
+  stage.addChild(poker);
+}
+
+ createjs.Ticker.setFPS(60);
+ createjs.Ticker.addEventListener("tick", function (e) {
+ stage.update();
+});
+
+function click(e){
+ var poker = e.target ;
+ var color = poker.after ;
+
+ var changeX = (poker.key * 15) +100;
+ createjs.Tween.get(poker).to({x:changeX, y:200},1000).call(function(e){
+   stage.removeChild(poker);
+   var open_poker = new createjs.Shape();
+   open_poker.graphics.beginFill(color).drawRect(0,0,100,100);
+   open_poker.x = changeX;
+   open_poker.y = 200;
+   stage.addChild(open_poker);
+ });
+
+// var open_poker = poker.after ;
+
+
+}
+</script>
+</html>
